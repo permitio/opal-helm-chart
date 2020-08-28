@@ -1,0 +1,11 @@
+apiVersion: k3d.io/v1alpha2
+kind: Simple
+name: k3d
+image: rancher/k3s:v1.18.18-k3s1
+options:
+  k3d:
+    wait: true
+    disableLoadbalancer: true
+  k3s:
+    extraServerArgs:
+    - "--disable=metrics-server,servicelb,traefik"

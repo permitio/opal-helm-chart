@@ -1,0 +1,10 @@
+imageRegistry: docker.io
+
+server:
+  dataConfigSources:
+    config:
+      entries:
+        - url: "111"
+        - url: "222"
+
+client: null

@@ -1,0 +1,74 @@
+name: Release OPAL Helm chart
+
+on:
+  workflow_dispatch
+
+jobs:
+  build_chart_job:
+    name: Build Helm chart
+    runs-on: ubuntu-18.04
+    outputs:
+      opalVersion: ${{ steps.opalVersion.outputs.opalVersion }}
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: nodejs 12
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+      - name: cache node_modules
+        id: nodeCache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ./node_modules
+            ./package-lock.json
+          key: node-modules-14-0-2--2.0.0
+      - run: npm install release-it@14.0.2 @release-it/conventional-changelog@2.0.0
+      - name: releaseIt
+        run: |
+          git config user.email "helm@opal.ac"
+          git config user.name "Helm Opal.Ac"
+          npx release-it --ci
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: opal version
+        id: opalVersion
+        run: |
+          cat /tmp/opal.version
+          echo "::set-output name=opalVersion::$(cat /tmp/opal.version)"
+      - uses: azure/setup-helm@v1
+      - run: helm package . --version ${{ steps.opalVersion.outputs.opalVersion }}
+      - name: upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: "helm"
+          path: "opal-${{ steps.opalVersion.outputs.opalVersion }}.tgz"
+
+  publish_chart_job:
+    name: Publish Helm chart
+    runs-on: ubuntu-18.04
+    needs: build_chart_job
+    steps:
+      - name: checkout gh-pages
+        uses: actions/checkout@v2
+        with:
+          ref: gh-pages
+      - name: download artifact
+        uses: actions/download-artifact@v2
+        id: download
+        with:
+          name: helm
+          path: /tmp/opal
+      - uses: azure/setup-helm@v1
+      - name: update index
+        run: |
+          helm repo index /tmp/opal --merge ./index.yaml
+          mv -f /tmp/opal/* .
+      - name: publish
+        uses: actions-js/push@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: gh-pages

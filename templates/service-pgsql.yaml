@@ -1,0 +1,19 @@
+{{- if .Values.server }}
+{{- if and .Values.server.broadcastPgsql (not .Values.server.broadcastUri) }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "opal.pgsqlName" . | quote }}
+  labels:
+    {{- include "opal.pgsqlLabels" . | nindent 4 }}
+spec:
+  type: ClusterIP
+  ports:
+    - name: pgsql
+      port: 5432
+      targetPort: pgsql
+      protocol: TCP
+  selector:
+    {{- include "opal.pgsqlSelectorLabels" . | nindent 4 }}
+{{- end }}
+{{- end }}

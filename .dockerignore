@@ -1,0 +1,9 @@
+venv
+*.json
+*.yaml
+.github
+.git
+*.adoc
+.editorconfig
+.gitignore
+.helmignore
