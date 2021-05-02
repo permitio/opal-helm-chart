@@ -1,2 +1,3 @@
 # opal-helm-chart
-You know, for Kubernetes
+
+This helm chart is **work in progress** and will be published soon.
