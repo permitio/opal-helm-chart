@@ -23,10 +23,6 @@ Add Helm repository
 [source]
 ----
 helm repo add opal https://authorizon.github.io/opal-helm-chart
-----
-
-[source]
-----
 helm repo update
 ----
 
@@ -44,21 +40,23 @@ Search for all available versions
 helm search repo opal --versions
 ----
 
-Will output:
-[source]
-----
-NAME                    CHART VERSION   APP VERSION     DESCRIPTION
+=== Deploy OPAL to your Kubernetes cluster
 
-... TO BE PROVIDED ....
-
-----
-
-Install specific version
+Install specific version (with default configuration):
 
 [source]
 ----
 helm install --create-namespace -n opal-ns --version x.x.x myopal opal/opal
 ----
+
+Install specific version (with custom configuration provided as YAML):
+
+[source]
+----
+helm install -f myvalues.yaml --create-namespace -n opal-ns --version x.x.x myopal opal/opal
+----
+
+myvalues.yaml must conform to the https://raw.githubusercontent.com/authorizon/opal-helm-chart/master/values.schema.json[json schema].
 
 === Verify installation
 
