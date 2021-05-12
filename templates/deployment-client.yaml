@@ -1,0 +1,53 @@
+{{- if .Values.client }}
+{{- $nm := include "opal.clientName" . | quote }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ $nm }}
+  labels:
+    {{- include "opal.clientLabels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.client.replicas }}
+  selector:
+    matchLabels:
+      {{- include "opal.clientSelectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "opal.clientLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: opal-client
+          image: {{ printf "%s/authorizon/opal-client:%s" .Values.imageRegistry .Chart.AppVersion | quote }}
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: {{ .Values.client.port }}
+              protocol: TCP
+            - name: opa
+              containerPort: {{ .Values.client.opaPort }}
+              protocol: TCP
+          env:
+            - name: UVICORN_NUM_WORKERS
+              value: "1"
+          {{- if .Values.server }}
+            - name: OPAL_SERVER_URL
+              value: {{ printf "http://%s:%v" (include "opal.serverName" .) .Values.server.port | quote }}
+          {{- end }}
+          readinessProbe:
+            httpGet:
+              path: /healthcheck
+              port: http
+            failureThreshold: 5
+            initialDelaySeconds: 5
+            timeoutSeconds: 10
+            periodSeconds: 15
+
+          livenessProbe:
+            httpGet:
+              path: /healthcheck
+              port: http
+            failureThreshold: 5
+            timeoutSeconds: 10
+            periodSeconds: 30
+{{- end }}

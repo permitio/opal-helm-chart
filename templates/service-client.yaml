@@ -1,0 +1,21 @@
+{{- if .Values.client }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "opal.clientName" . }}
+  labels:
+    {{- include "opal.clientLabels" . | nindent 4 }}
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: {{ .Values.client.port }}
+      targetPort: http
+      protocol: TCP
+    - name: opa
+      port: {{ .Values.client.opaPort }}
+      targetPort: opa
+      protocol: TCP
+  selector:
+    {{- include "opal.clientSelectorLabels" . | nindent 4 }}
+{{- end }}

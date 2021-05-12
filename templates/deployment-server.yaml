@@ -1,0 +1,106 @@
+{{- if .Values.server }}
+{{- $nm := include "opal.serverName" . | quote }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ $nm }}
+  labels:
+    {{- include "opal.serverLabels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.server.replicas }}
+  selector:
+    matchLabels:
+      {{- include "opal.serverSelectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "opal.serverLabels" . | nindent 8 }}
+    spec:
+      {{- if .Values.e2e }}
+      volumes:
+        - name: e2e
+          emptyDir: {}
+        - name: policy-repo-data
+          configMap:
+            name: policy-repo-data
+            defaultMode: 0755
+
+      initContainers:
+        - name: git-init
+          image: {{ printf "%s/authorizon/opal-server:%s" .Values.imageRegistry .Chart.AppVersion | quote }}
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - mountPath: /opt/e2e
+              name: e2e
+            - mountPath: /opt/e2e/policy-repo-data
+              name: policy-repo-data
+              readOnly: true
+          command:
+            - '/bin/sh'
+            - '-c'
+            - |
+              set -x
+              set -e
+
+              git init --bare /opt/e2e/policy-repo.git
+              git clone /opt/e2e/policy-repo.git /opt/e2e/policy-repo-working
+              cp /opt/e2e/policy-repo-data/*.* /opt/e2e/policy-repo-working
+              cd /opt/e2e/policy-repo-working
+              git config user.email "opal@opal.ac"
+              git config user.name "Opal Bot"
+              git add .
+              git commit -am 'chore: initial'
+              git push
+
+              echo ">>>> HEAD: $(git rev-parse --short HEAD) <<<<"
+      {{- end }}
+      containers:
+        - name: opal-server
+          image: {{ printf "%s/authorizon/opal-server:%s" .Values.imageRegistry .Chart.AppVersion | quote }}
+          imagePullPolicy: IfNotPresent
+          {{- if .Values.e2e }}
+          volumeMounts:
+            - mountPath: /opt/e2e/policy-repo-data
+              name: policy-repo-data
+              readOnly: true
+            - mountPath: /opt/e2e
+              name: e2e
+          {{- end }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.server.port }}
+              protocol: TCP
+          env:
+            - name: OPAL_POLICY_REPO_URL
+              value: {{ .Values.server.policyRepoUrl | quote }}
+            - name: OPAL_POLICY_REPO_POLLING_INTERVAL
+              value: {{ .Values.server.pollingInterval | quote }}
+            - name: UVICORN_NUM_WORKERS
+              value: {{ .Values.server.uvicornWorkers | quote }}
+            - name: OPAL_DATA_CONFIG_SOURCES
+              value: {{ .Values.server.dataConfigSources | toJson | squote }}
+            {{- if .Values.server.broadcastUri }}
+            - name: OPAL_BROADCAST_URI
+              value: {{ .Values.server.broadcastUri | quote }}
+            {{- else if .Values.server.broadcastPgsql }}
+            - name: OPAL_BROADCAST_URI
+              value: 'postgres://postgres:postgres@{{ include "opal.pgsqlName" . }}:5432/postgres'
+            {{- end }}
+          readinessProbe:
+            httpGet:
+              path: /healthcheck
+              port: http
+            failureThreshold: 5
+            initialDelaySeconds: 5
+            timeoutSeconds: 10
+            periodSeconds: 15
+
+          livenessProbe:
+            httpGet:
+              path: /healthcheck
+              port: http
+            failureThreshold: 5
+            timeoutSeconds: 10
+            periodSeconds: 30
+
+{{- end }}

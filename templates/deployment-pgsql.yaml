@@ -1,0 +1,35 @@
+{{- if .Values.server }}
+{{- if and .Values.server.broadcastPgsql (not .Values.server.broadcastUri) }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "opal.pgsqlName" . }}
+  labels:
+    {{- include "opal.pgsqlLabels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.client.replicas }}
+  selector:
+    matchLabels:
+      {{- include "opal.pgsqlSelectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "opal.pgsqlLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: pgsql
+          image: "postgres:alpine"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: pgsql
+              containerPort: 5432
+              protocol: TCP
+          env:
+            - name: POSTGRES_DB
+              value: postgres
+            - name: POSTGRES_USER
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              value: postgres
+{{- end }}
+{{- end }}

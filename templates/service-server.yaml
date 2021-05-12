@@ -1,0 +1,17 @@
+{{- if .Values.server }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "opal.serverName" . | quote }}
+  labels:
+    {{- include "opal.serverLabels" . | nindent 4 }}
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: {{ .Values.server.port }}
+      targetPort: http
+      protocol: TCP
+  selector:
+    {{- include "opal.serverSelectorLabels" . | nindent 4 }}
+{{- end }}

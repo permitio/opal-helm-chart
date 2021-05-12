@@ -1,0 +1,24 @@
+{{- $url := printf "http://%v:%v/v1/data" (include "opal.clientName" .) .Values.client.opaPort -}}
+apiVersion: v1
+kind: Pod
+metadata:
+  name: opal-e2e
+  annotations:
+    "helm.sh/hook": test
+    "helm.sh/hook-delete-policy": before-hook-creation
+spec:
+  restartPolicy: Never
+  containers:
+  - name: e2e
+    image: "apteno/alpine-jq:2021-04-25"
+    command:
+    - '/bin/sh'
+    - '-c'
+    - |
+      set -x
+      set -e
+
+      sleep 15
+
+      [ "$(curl -s {{ $url }} | jq '.result.users | keys | length')" -eq 3 ]
+      [ "$(curl -s {{ $url }} | jq '.result.role_permissions | keys | length')" -eq 3 ]
