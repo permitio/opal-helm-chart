@@ -57,7 +57,7 @@ OPAL Client should populate embedded OPA instance with polices and data from con
 To validate it - one could create port-forwarding to OPAL client Pod. Port 8181 is the embedded OPA agent.
 
 ```
-kubectl port-forward -n opal-ns service/opal-client 8181:8181
+kubectl port-forward -n opal-ns service/myopal-client 8181:8181
 ```
 
 Then, open http://localhost:8181/v1/data/ in your browser to check OPA data document state.
