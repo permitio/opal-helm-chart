@@ -1,4 +1,5 @@
 imageRegistry: docker.io
+imagePullSecrets: []
 
 server:
   port: 7002

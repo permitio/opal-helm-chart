@@ -16,6 +16,10 @@ spec:
       labels:
         {{- include "opal.clientLabels" . | nindent 8 }}
     spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       containers:
         - name: opal-client
           image: {{ printf "%s/authorizon/opal-client:%s" .Values.imageRegistry .Chart.AppVersion | quote }}

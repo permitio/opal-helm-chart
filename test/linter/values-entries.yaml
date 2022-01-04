@@ -1,4 +1,6 @@
 imageRegistry: docker.io
+imagePullSecrets: 
+  - name: my_awesome_secret
 
 server:
   dataConfigSources:
