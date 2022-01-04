@@ -27,8 +27,8 @@ spec:
 
       initContainers:
         - name: git-init
-          image: {{ printf "%s/authorizon/opal-server:%s" .Values.imageRegistry .Chart.AppVersion | quote }}
-          imagePullPolicy: IfNotPresent
+          image: "{{ .Values.imageRegistry }}{{ .Values.server.image.path }}{{ .Values.server.image.name }}:{{ .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.imagePullPolicy }}
           volumeMounts:
             - mountPath: /opt/e2e
               name: e2e
@@ -56,8 +56,8 @@ spec:
       {{- end }}
       containers:
         - name: opal-server
-          image: {{ printf "%s/authorizon/opal-server:%s" .Values.imageRegistry .Chart.AppVersion | quote }}
-          imagePullPolicy: IfNotPresent
+          image: "{{ .Values.imageRegistry }}{{ .Values.server.image.path }}{{ .Values.server.image.name }}:{{ .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.imagePullPolicy }}
           {{- if .Values.e2e }}
           volumeMounts:
             - mountPath: /opt/e2e/policy-repo-data

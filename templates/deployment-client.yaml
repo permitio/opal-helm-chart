@@ -18,8 +18,8 @@ spec:
     spec:
       containers:
         - name: opal-client
-          image: {{ printf "%s/authorizon/opal-client:%s" .Values.imageRegistry .Chart.AppVersion | quote }}
-          imagePullPolicy: IfNotPresent
+          image: "{{ .Values.imageRegistry }}{{ .Values.client.image.path }}{{ .Values.client.image.name }}:{{ .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.imagePullPolicy }}
           ports:
             - name: http
               containerPort: {{ .Values.client.port }}
