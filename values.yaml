@@ -1,7 +1,13 @@
+imagePullPolicy: IfNotPresent
 imageRegistry: docker.io
 imagePullSecrets: []
 
 server:
+  image:
+    path: /authorizon/
+    name: opal-server
+    # overrides server image tag, default is chart appVersion
+    tag: ""
   port: 7002
   policyRepoUrl: "https://github.com/authorizon/opal-example-policy-repo"
   pollingInterval: 30
@@ -14,6 +20,11 @@ server:
   replicas: 1
 
 client:
+  image:
+    path: /authorizon/
+    name: opal-client
+    # overrides client image tag, default is chart appVersion
+    tag: ""
   port: 7000
   opaPort: 8181
   replicas: 1

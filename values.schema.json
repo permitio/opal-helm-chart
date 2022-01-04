@@ -34,6 +34,21 @@
       "type": ["null", "object"], "additionalProperties": false, "title": "opal server settings",
       "required": ["port", "policyRepoUrl", "pollingInterval", "dataConfigSources", "broadcastPgsql", "uvicornWorkers", "replicas"],
       "properties": {
+        "image": {
+          "type": ["null", "object"], "additionalProperties": false, "title": "opal-server image settings",
+          "required": ["path", "name"],
+          "properties": {
+            "path": {
+              "type": "string", "title": "opal-server path to image", "default": "/authorizon/"
+            },
+            "name": {
+              "type": "string", "title": "opal-server image name", "default": "opal-server"
+            },
+            "tag": {
+              "type": "string", "title": "opal-server image tag", "default": "0.1.8"
+            }
+          }
+        },
         "port": {
           "type": "integer", "title": "server listening port", "default": 7002
         },
@@ -63,6 +78,21 @@
       "type": ["null", "object"], "additionalProperties": false, "title": "opal client settings",
       "required": ["port", "opaPort", "replicas"],
       "properties": {
+        "image": {
+          "type": ["null", "object"], "additionalProperties": false, "title": "opal-client image settings",
+            "required": ["path", "name"],
+          "properties": {
+            "path": {
+              "type": "string", "title": "opal-client path to image", "default": "/authorizon/"
+            },
+            "name": {
+              "type": "string", "title": "opal-client image name", "default": "opal-client"
+            },
+            "tag": {
+              "type": "string", "title": "opal-client image tag", "default": "0.1.8"
+            }
+          }
+        },
         "port": {
           "type": "integer", "title": "client rest port", "default": 7000
         },
