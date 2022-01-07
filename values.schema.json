@@ -9,20 +9,6 @@
       "properties": {
         "url": {"type": "string", "title": "url source to query for data"}
       }
-    },
-    "ServerDataSourceConfig": {
-      "type": "object", "title": "ServerDataSourceConfig", "additionalProperties": false,
-      "properties": {
-        "config": {
-          "type": "object", "title": "DataSourceConfig", "additionalProperties": false,
-          "properties": {
-            "entries": {
-              "type": "array", "title": "list of data sources", "default": [],
-              "items": { "$ref": "#/definitions/DataSourceEntry" }
-            }
-          }
-        }
-      }
     }
   },
 
@@ -32,19 +18,11 @@
     "imageRegistry": { "type": "string", "default": "docker.io", "title": "docker registry for all images of the chart" },
     "server": {
       "type": ["null", "object"], "additionalProperties": false, "title": "opal server settings",
-      "required": ["port", "policyRepoUrl", "pollingInterval", "dataConfigSources", "broadcastPgsql", "uvicornWorkers", "replicas"],
+      "required": ["port", "broadcastPgsql", "uvicornWorkers", "replicas"],
       "properties": {
         "port": {
           "type": "integer", "title": "server listening port", "default": 7002
         },
-        "policyRepoUrl": {
-          "type": "string", "title": "policy repo url",
-          "default":"https://github.com/authorizon/opal-example-policy-repo"
-        },
-        "pollingInterval": {
-          "type": "integer", "title": "polling interval (sec)", "default": 30
-        },
-        "dataConfigSources": {"$ref": "#/definitions/ServerDataSourceConfig"},
         "broadcastUri": {
           "type": ["null", "string"], "title": "broadcast url", "default": null
         },
@@ -71,6 +49,9 @@
         },
         "replicas": {
           "type": "integer", "title": "num of replicas", "default": 1
+        },
+        "uvicornWorkers": {
+          "type": "integer", "title": "num of uvicorn workers per pod", "default": 4
         }
       }
     }

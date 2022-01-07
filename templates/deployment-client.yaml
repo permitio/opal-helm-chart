@@ -27,9 +27,12 @@ spec:
             - name: opa
               containerPort: {{ .Values.client.opaPort }}
               protocol: TCP
+          envFrom: 
+            - configMapRef:
+                name: "{{ .Release.Name }}-env"
           env:
             - name: UVICORN_NUM_WORKERS
-              value: "1"
+              value: {{ .Values.client.uvicornWorkers | quote }}
           {{- if .Values.server }}
             - name: OPAL_SERVER_URL
               value: {{ printf "http://%s:%v" (include "opal.serverName" .) .Values.server.port | quote }}
