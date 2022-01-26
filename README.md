@@ -14,12 +14,12 @@ OPAL brings open-policy up to the speed needed by live applications. As your app
 ### Installation
 
 OPAL Helm chart could be installed only with [Helm 3](https://helm.sh/docs/).
-The chart is published to public Helm repository, [hosted on GitHub itself](https://authorizon.github.io/opal-helm-chart/). It's recommended to install OPAL into a dedicated namespace.
+The chart is published to public Helm repository, [hosted on GitHub itself](https://permitio.github.io/opal-helm-chart/). It's recommended to install OPAL into a dedicated namespace.
 
 Add Helm repository
 
 ```
-helm repo add opal https://authorizon.github.io/opal-helm-chart
+helm repo add opal https://permitio.github.io/opal-helm-chart
 helm repo update
 ```
 
