@@ -4,4 +4,4 @@ type: application
 icon: https://www.opal.ac/icons/icon-192x192.png
 version: 0.0.0 # actual chart version is managed by git tags
 appVersion: 0.1.18
-kubeVersion: ">= 1.18.0"
+kubeVersion: ">= 1.18.0-0"
