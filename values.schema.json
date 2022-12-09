@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://authorizon.github.io/opal-helm-chart/",
+  "$id": "https://permitio.github.io/opal-helm-chart/",
   "title": "OPAL Helm values",
 
   "definitions": {
@@ -39,7 +39,7 @@
         },
         "policyRepoUrl": {
           "type": "string", "title": "policy repo url",
-          "default":"https://github.com/authorizon/opal-example-policy-repo"
+          "default":"https://github.com/permitio/opal-example-policy-repo"
         },
         "pollingInterval": {
           "type": "integer", "title": "polling interval (sec)", "default": 30
