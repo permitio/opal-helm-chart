@@ -74,11 +74,24 @@ spec:
             - name: http
               containerPort: {{ .Values.server.port }}
               protocol: TCP
+          envFrom:
+          {{- if .Values.server.policyRepoSshKey }}
+          - secretRef:
+              name: {{ include "opal.envSecretsName" . }}
+          {{- end }}
           env:
             - name: OPAL_POLICY_REPO_URL
               value: {{ .Values.server.policyRepoUrl | quote }}
             - name: OPAL_POLICY_REPO_POLLING_INTERVAL
               value: {{ .Values.server.pollingInterval | quote }}
+            {{- if .Values.server.policyRepoClonePath }}
+            - name: OPAL_POLICY_REPO_CLONE_PATH
+              value: {{ .Values.server.policyRepoClonePath | quote }}
+            {{- end }}
+            {{- if .Values.server.policyRepoMainBranch }}
+            - name: OPAL_POLICY_REPO_MAIN_BRANCH
+              value: {{ .Values.server.policyRepoMainBranch | quote }}
+            {{- end }}
             - name: UVICORN_NUM_WORKERS
               value: {{ .Values.server.uvicornWorkers | quote }}
             - name: OPAL_DATA_CONFIG_SOURCES
