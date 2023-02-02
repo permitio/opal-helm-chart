@@ -41,6 +41,15 @@
           "type": "string", "title": "policy repo url",
           "default":"https://github.com/permitio/opal-example-policy-repo"
         },
+        "policyRepoSshKey": {
+          "type": ["null", "string"], "title": "policy SSH key","default": null
+        },
+        "policyRepoClonePath": {
+          "type": ["null", "string"], "title": "policy clone path","default": null
+        },
+        "policyRepoMainBranch": {
+          "type": ["null", "string"], "title": "policy main branch","default": null
+        },
         "pollingInterval": {
           "type": "integer", "title": "polling interval (sec)", "default": 30
         },

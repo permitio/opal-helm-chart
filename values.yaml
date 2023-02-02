@@ -4,6 +4,9 @@ imagePullSecrets: []
 server:
   port: 7002
   policyRepoUrl: "https://github.com/permitio/opal-example-policy-repo"
+  policyRepoSshKey: null
+  policyRepoClonePath: null
+  policyRepoMainBranch: null
   pollingInterval: 30
   dataConfigSources:
     config:

@@ -10,6 +10,10 @@
 {{ printf "%s-pgsql" .Release.Name }}
 {{- end -}}
 
+{{- define "opal.envSecretsName" -}}
+{{ printf "%s-env-secrets" .Release.Name }}
+{{- end -}}
+
 {{- define "opal.clientSelectorLabels" -}}
 app.kubernetes.io/name: {{ include "opal.clientName" . | quote }}
 app.kubernetes.io/instance: {{ .Release.Name | quote }}
