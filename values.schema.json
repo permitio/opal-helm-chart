@@ -65,7 +65,11 @@
         },
         "replicas": {
           "type": "integer", "title": "num of replicas", "default": 1
+        },
+        "extraEnv": {
+          "type": "object", "title": "extra environment variables list", "default": null
         }
+
       }
     },
     "client": {
@@ -80,6 +84,9 @@
         },
         "replicas": {
           "type": "integer", "title": "num of replicas", "default": 1
+        },
+        "extraEnv": {
+          "type": "object", "title": "extra environment variables list", "default": null
         }
       }
     }
