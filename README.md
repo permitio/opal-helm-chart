@@ -9,7 +9,7 @@ OPAL is an administration layer for Open Policy Agent (OPA), detecting changes t
 
 OPAL brings open-policy up to the speed needed by live applications. As your application state changes (whether it's via your APIs, DBs, git, S3 or 3rd-party SaaS services), OPAL will make sure your services are always in sync with the authorization data and policy they need (and only those they need).
 
-[Check out OPAL main repo here.](https://github.com/authorizon/opal)
+[Check out OPAL main repo here.](https://github.com/permitio/opal)
 
 ### Installation
 
@@ -49,7 +49,7 @@ Install specific version (with custom configuration provided as YAML):
 helm install -f myvalues.yaml --create-namespace -n opal-ns --version x.x.x myopal opal/opal
 ```
 
-`myvalues.yaml` must conform to the [json schema](https://raw.githubusercontent.com/authorizon/opal-helm-chart/master/values.schema.json).
+`myvalues.yaml` must conform to the [json schema](https://raw.githubusercontent.com/permitio/opal-helm-chart/master/values.schema.json).
 
 ### Verify installation
 

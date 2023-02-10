@@ -22,7 +22,7 @@ spec:
       {{- end }}
       containers:
         - name: opal-client
-          image: {{ printf "%s/authorizon/opal-client:%s" .Values.imageRegistry .Chart.AppVersion | quote }}
+          image: {{ printf "%s/permitio/opal-client:%s" .Values.imageRegistry .Chart.AppVersion | quote }}
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
