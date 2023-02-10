@@ -103,6 +103,12 @@ spec:
             - name: OPAL_BROADCAST_URI
               value: 'postgres://postgres:postgres@{{ include "opal.pgsqlName" . }}:5432/postgres'
             {{- end }}
+            {{- if .Values.server.extraEnv }}
+            {{- range $name, $value := .Values.server.extraEnv }}
+            - name: {{ $name }}
+              value: {{ $value | quote }}
+            {{- end }}
+            {{- end }}
           readinessProbe:
             httpGet:
               path: /healthcheck

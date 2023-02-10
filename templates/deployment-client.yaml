@@ -38,6 +38,12 @@ spec:
             - name: OPAL_SERVER_URL
               value: {{ printf "http://%s:%v" (include "opal.serverName" .) .Values.server.port | quote }}
           {{- end }}
+          {{- if .Values.client.extraEnv }}
+          {{- range $name, $value := .Values.client.extraEnv }}
+            - name: {{ $name }}
+              value: {{ $value | quote }}
+          {{- end }}
+          {{- end }}
           readinessProbe:
             httpGet:
               path: /healthcheck
