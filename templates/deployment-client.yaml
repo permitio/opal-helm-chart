@@ -46,7 +46,7 @@ spec:
           {{- end }}
           readinessProbe:
             httpGet:
-              path: /healthcheck
+              path: /health
               port: http
             failureThreshold: 5
             initialDelaySeconds: 5
@@ -55,7 +55,7 @@ spec:
 
           livenessProbe:
             httpGet:
-              path: /healthcheck
+              path: /health
               port: http
             failureThreshold: 5
             timeoutSeconds: 10
