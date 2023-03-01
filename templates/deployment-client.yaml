@@ -20,6 +20,13 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      {{- if .Values.client.opaStartupData }}
+      volumes:
+        - name: opa-startup-data
+          configMap:
+            name: opa-startup-data
+            defaultMode: 0444
+      {{- end }}
       containers:
         - name: opal-client
           image: {{ printf "%s/permitio/opal-client:%s" .Values.imageRegistry .Chart.AppVersion | quote }}
@@ -43,6 +50,12 @@ spec:
             - name: {{ $name }}
               value: {{ $value | quote }}
           {{- end }}
+          {{- end }}
+          {{- if .Values.client.opaStartupData }}
+          volumeMounts:
+            - mountPath: /opt/opa/startup-data
+              name: opa-startup-data
+              readOnly: true
           {{- end }}
           readinessProbe:
             httpGet:
