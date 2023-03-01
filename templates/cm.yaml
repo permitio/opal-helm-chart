@@ -11,3 +11,15 @@ data:
   rbac.rego: |
     {{- .Files.Get "test/e2e/rbac.rego" | nindent 4 }}
 {{- end }}
+---
+{{- if .Values.client.opaStartupData }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: opa-startup-data
+data:
+  {{- range $name, $value := .Values.client.opaStartupData }}
+  {{ $name }}: |
+    {{ $value |  nindent 4 }}
+  {{- end }}
+{{- end }}
