@@ -68,8 +68,13 @@
         },
         "extraEnv": {
           "type": "object", "title": "extra environment variables list", "default": null
+        },
+        "secrets": {
+          "type": "array",
+          "title": "name of a kubernetes secret from where to fetch secret environment variables.",
+          "default": null,
+          "items": { "type": "string" }
         }
-
       }
     },
     "client": {
@@ -90,6 +95,12 @@
         },
         "opaStartupData": {
           "type": "object", "title": "client startup data for embedded opa", "default": null
+        },
+        "secrets": {
+          "type": "array",
+          "title": "name of a kubernetes secret from where to fetch secret environment variables.",
+          "default": null,
+          "items": { "type": "string" }
         }
       }
     }
