@@ -30,6 +30,7 @@
 
   "properties": {
     "imageRegistry": { "type": "string", "default": "docker.io", "title": "docker registry for all images of the chart" },
+    "postgresImageRegistry": { "type": "string", "default": "docker.io", "title": "docker registry for postgres image of the chart" },
     "server": {
       "type": ["null", "object"], "additionalProperties": false, "title": "opal server settings",
       "required": ["port", "policyRepoUrl", "pollingInterval", "dataConfigSources", "broadcastPgsql", "uvicornWorkers", "replicas"],

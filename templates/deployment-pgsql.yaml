@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: pgsql
-          image: "postgres:alpine"
+          image: {{ printf "%s/postgres:alpine" .Values.postgresImageRegistry  | quote }}
           imagePullPolicy: IfNotPresent
           ports:
             - name: pgsql
