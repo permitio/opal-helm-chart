@@ -51,6 +51,13 @@ spec:
               value: {{ $value | quote }}
           {{- end }}
           {{- end }}
+          {{- if .Values.client.secrets }}
+          envFrom:
+          {{- range $name := .Values.client.secrets }}
+            - secretRef:
+                name: {{ $name }}
+          {{- end }}
+          {{- end }}
           {{- if .Values.client.opaStartupData }}
           volumeMounts:
             - mountPath: /opt/opa/startup-data

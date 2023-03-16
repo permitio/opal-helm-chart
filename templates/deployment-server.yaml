@@ -109,6 +109,13 @@ spec:
               value: {{ $value | quote }}
             {{- end }}
             {{- end }}
+          {{- if .Values.server.secrets }}
+          envFrom:
+          {{- range $name := .Values.server.secrets }}
+            - secretRef:
+                name: {{ $name }}
+          {{- end }}
+          {{- end }}
           readinessProbe:
             httpGet:
               path: /healthcheck
