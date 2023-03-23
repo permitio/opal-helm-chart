@@ -21,7 +21,8 @@
               "items": { "$ref": "#/definitions/DataSourceEntry" }
             }
           }
-        }
+        },
+        "external_source_url": {"type": "string", "title": "url to external data source"}
       }
     }
   },

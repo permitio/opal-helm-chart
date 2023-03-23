@@ -1,6 +1,6 @@
 imageRegistry: docker.io
 postgresImageRegistry: docker.io
-imagePullSecrets: []
+imagePullSecrets: [ ]
 
 server:
   port: 7002
@@ -10,8 +10,7 @@ server:
   policyRepoMainBranch: null
   pollingInterval: 30
   dataConfigSources:
-    config:
-      entries: []
+    external_source_url: "https://your-api.com/path/to/api/endpoint"
   broadcastUri: null
   broadcastPgsql: true
   uvicornWorkers: 4
