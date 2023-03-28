@@ -62,6 +62,9 @@
         "broadcastPgsql": {
           "type": "boolean", "title": "install broadcast pgsql", "default": true
         },
+        "broadcastReplicas": {
+          "type": "integer", "title": "replicas for broadcast pgsql", "default": 1
+        },
         "uvicornWorkers": {
           "type": "integer", "title": "num of uvicorn workers per pod", "default": 4
         },

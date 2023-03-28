@@ -1,3 +1,4 @@
+{{- if .Values.client }}
 {{- $url := printf "http://%v:%v/v1/data" (include "opal.clientName" .) .Values.client.opaPort -}}
 apiVersion: v1
 kind: Pod
@@ -22,3 +23,4 @@ spec:
 
       [ "$(curl -s {{ $url }} | jq '.result.users | keys | length')" -eq 3 ]
       [ "$(curl -s {{ $url }} | jq '.result.role_permissions | keys | length')" -eq 3 ]
+{{- end }}
