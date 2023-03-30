@@ -1,17 +1,17 @@
 {{- define "opal.serverName" -}}
-{{ printf "%s-server" .Release.Name }}
+{{ printf "%s-%s-server" .Release.Name .Chart.Name }}
 {{- end -}}
 
 {{- define "opal.clientName" -}}
-{{ printf "%s-client" .Release.Name }}
+{{ printf "%s-%s-client" .Release.Name .Chart.Name }}
 {{- end -}}
 
 {{- define "opal.pgsqlName" -}}
-{{ printf "%s-pgsql" .Release.Name }}
+{{ printf "%s-%s-pgsql" .Release.Name .Chart.Name }}
 {{- end -}}
 
 {{- define "opal.envSecretsName" -}}
-{{ printf "%s-env-secrets" .Release.Name }}
+{{ printf "%s-%s-env-secrets" .Release.Name .Chart.Name }}
 {{- end -}}
 
 {{- define "opal.clientSelectorLabels" -}}
