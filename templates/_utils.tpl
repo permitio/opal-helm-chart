@@ -1,17 +1,33 @@
 {{- define "opal.serverName" -}}
+{{- if eq .Release.Name .Chart.Name }}
+{{ printf "%s-server" .Release.Name  }}
+{{- else }}
 {{ printf "%s-%s-server" .Release.Name .Chart.Name }}
+{{- end -}}
 {{- end -}}
 
 {{- define "opal.clientName" -}}
+{{- if eq .Release.Name .Chart.Name }}
+{{ printf "%s-client" .Release.Name  }}
+{{- else }}
 {{ printf "%s-%s-client" .Release.Name .Chart.Name }}
+{{- end -}}
 {{- end -}}
 
 {{- define "opal.pgsqlName" -}}
+{{- if eq .Release.Name .Chart.Name }}
+{{ printf "%s-pgsql" .Release.Name  }}
+{{- else }}
 {{ printf "%s-%s-pgsql" .Release.Name .Chart.Name }}
+{{- end -}}
 {{- end -}}
 
 {{- define "opal.envSecretsName" -}}
+{{- if eq .Release.Name .Chart.Name }}
+{{ printf "%s-env-secrets" .Release.Name  }}
+{{- else }}
 {{ printf "%s-%s-env-secrets" .Release.Name .Chart.Name }}
+{{- end -}}
 {{- end -}}
 
 {{- define "opal.clientSelectorLabels" -}}
