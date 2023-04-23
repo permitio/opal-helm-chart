@@ -1,4 +1,5 @@
 {{- if .Values.client }}
+{{- if ne .Values.client.enabled false  }}
 {{- $nm := include "opal.clientName" . | quote }}
 apiVersion: apps/v1
 kind: Deployment
@@ -80,4 +81,5 @@ spec:
             failureThreshold: 5
             timeoutSeconds: 10
             periodSeconds: 30
+{{- end }}
 {{- end }}

@@ -1,4 +1,5 @@
 {{- if .Values.client }}
+{{- if ne .Values.client.enabled false  }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -18,4 +19,6 @@ spec:
       protocol: TCP
   selector:
     {{- include "opal.clientSelectorLabels" . | nindent 4 }}
+
+{{- end }}
 {{- end }}
