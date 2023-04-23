@@ -1,4 +1,5 @@
 {{- if .Values.server }}
+{{- if ne .Values.server.enabled false  }}
 {{- $nm := include "opal.serverName" . | quote }}
 apiVersion: apps/v1
 kind: Deployment
@@ -133,4 +134,5 @@ spec:
             timeoutSeconds: 10
             periodSeconds: 30
 
+{{- end }}
 {{- end }}

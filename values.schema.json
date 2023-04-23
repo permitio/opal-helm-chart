@@ -36,6 +36,9 @@
       "type": ["null", "object"], "additionalProperties": false, "title": "opal server settings",
       "required": ["port", "policyRepoUrl", "pollingInterval", "dataConfigSources", "broadcastPgsql", "uvicornWorkers", "replicas"],
       "properties": {
+        "enabled": {
+          "type": "boolean", "title": "enable server", "default": true
+        },
         "port": {
           "type": "integer", "title": "server listening port", "default": 7002
         },
@@ -86,6 +89,9 @@
       "type": ["null", "object"], "additionalProperties": false, "title": "opal client settings",
       "required": ["port", "opaPort", "replicas"],
       "properties": {
+        "enabled": {
+          "type": "boolean", "title": "enable client", "default": true
+        },
         "port": {
           "type": "integer", "title": "client rest port", "default": 7000
         },
