@@ -32,7 +32,7 @@ spec:
 
       initContainers:
         - name: git-init
-          image: {{ printf "%s/permitio/opal-server:%s" .Values.imageRegistry .Chart.AppVersion | quote }}
+          image: {{ include "opal.serverImage" . | quote }}
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - mountPath: /opt/e2e
@@ -61,7 +61,7 @@ spec:
       {{- end }}
       containers:
         - name: opal-server
-          image: {{ printf "%s/permitio/opal-server:%s" .Values.imageRegistry .Chart.AppVersion | quote }}
+          image: {{ include "opal.serverImage" . | quote }}
           imagePullPolicy: IfNotPresent
           {{- if .Values.e2e }}
           volumeMounts:
