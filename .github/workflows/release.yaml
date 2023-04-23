@@ -6,7 +6,7 @@ on:
 jobs:
   build_chart_job:
     name: Build Helm chart
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     outputs:
       opalVersion: ${{ steps.opalVersion.outputs.opalVersion }}
     steps:
@@ -49,7 +49,7 @@ jobs:
 
   publish_chart_job:
     name: Publish Helm chart
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     needs: build_chart_job
     steps:
       - name: checkout gh-pages

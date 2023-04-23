@@ -1,4 +1,6 @@
-imageRegistry: docker.io
+image:
+  registry: docker.io
+
 postgresImageRegistry: docker.io
 imagePullSecrets: [ ]
 

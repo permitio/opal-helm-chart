@@ -22,6 +22,14 @@
 {{- end -}}
 {{- end -}}
 
+{{- define "opal.serverImage" -}}
+{{- printf "%s/permitio/opal-server" .Values.image.registry }}:{{  default .Chart.AppVersion .Values.image.tag }}
+{{- end -}}
+
+{{- define "opal.clientImage" -}}
+{{- printf "%s/permitio/opal-client" (default .Values.image.registry)  }}:{{  default .Chart.AppVersion .Values.image.tag }}
+{{- end -}}
+
 {{- define "opal.envSecretsName" -}}
 {{- if eq .Release.Name .Chart.Name }}
 {{- printf "%s-env-secrets" .Release.Name  }}

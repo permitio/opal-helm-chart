@@ -27,10 +27,18 @@
     }
   },
 
-  "type": "object", "required": ["imageRegistry"],
+  "type": "object", "required": ["image"],
 
   "properties": {
-    "imageRegistry": { "type": "string", "default": "docker.io", "title": "docker registry for all images of the chart" },
+    "image": {
+      "type": "object", "title": "image", "additionalProperties": false,
+      "required": ["registry"],
+      "properties": {
+        "registry": { "type": "string", "default": "docker.io", "title": "docker image registry" },
+        "tag": { "type": "string", "title": "docker image tag" },
+        "pullPolicy": { "type": "string", "default": "IfNotPresent", "title": "docker image pull policy" }
+      }
+    },
     "postgresImageRegistry": { "type": "string", "default": "docker.io", "title": "docker registry for postgres image of the chart" },
     "server": {
       "type": ["null", "object"], "additionalProperties": false, "title": "opal server settings",
