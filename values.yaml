@@ -30,12 +30,12 @@ server:
   broadcastPgsql: true
   uvicornWorkers: 4
   replicas: 1
-  extraEnv:
-    "CUSTOM_ENV_VAR": "VALUE"
+  extraEnv: {
+    # "CUSTOM_ENV_VAR": "VALUE"
+  }
 
 client:
   port: 7000
   opaPort: 8181
   replicas: 1
-  extraEnv:
-    "CUSTOM_ENV_VAR": "VALUE"
+  extraEnv: {}
