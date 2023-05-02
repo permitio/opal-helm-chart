@@ -19,14 +19,14 @@ The chart is published to public Helm repository, [hosted on GitHub itself](http
 Add Helm repository
 
 ```
-helm repo add opal https://permitio.github.io/opal-helm-chart
+helm repo add permitio https://permitio.github.io/opal-helm-chart
 helm repo update
 ```
 
 Install the latest version
 
 ```
-helm install --create-namespace -n opal-ns myopal opal/opal
+helm install --create-namespace -n opal-ns opal permitio/opal
 ```
 
 Search for all available versions
@@ -40,13 +40,13 @@ helm search repo opal --versions
 Install specific version (with default configuration):
 
 ```
-helm install --create-namespace -n opal-ns --version x.x.x myopal opal/opal
+helm install --create-namespace -n opal-ns --version x.x.x opal permitio/opal
 ```
 
 Install specific version (with custom configuration provided as YAML):
 
 ```
-helm install -f myvalues.yaml --create-namespace -n opal-ns --version x.x.x myopal opal/opal
+helm install -f myvalues.yaml --create-namespace -n opal-ns --version x.x.x opal permitio/opal
 ```
 
 `myvalues.yaml` must conform to the [json schema](https://raw.githubusercontent.com/permitio/opal-helm-chart/master/values.schema.json).
@@ -57,7 +57,7 @@ OPAL Client should populate embedded OPA instance with polices and data from con
 To validate it - one could create port-forwarding to OPAL client Pod. Port 8181 is the embedded OPA agent.
 
 ```
-kubectl port-forward -n opal-ns service/myopal-client 8181:8181
+kubectl port-forward -n opal-ns service/opal-client 8181:8181
 ```
 
 Then, open http://localhost:8181/v1/data/ in your browser to check OPA data document state.
