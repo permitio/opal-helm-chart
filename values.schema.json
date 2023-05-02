@@ -7,7 +7,9 @@
     "DataSourceEntry": {
       "type": "object", "title": "DataSourceEntry", "additionalProperties": false,
       "properties": {
-        "url": {"type": "string", "title": "url source to query for data"}
+        "url": {"type": "string", "title": "url source to query for data"},
+        "topics": {"type": "array", "title": "topics the data applies to", "items": { "type": "string" }},
+        "dst_path": {"type": "string", "title": "OPA data api path to store the document at"}
       }
     },
     "ServerDataSourceConfig": {
