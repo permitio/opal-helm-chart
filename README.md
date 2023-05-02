@@ -78,4 +78,4 @@ This is not a comprehensive list, but includes the main variables you have to th
 | `server.extraEnv`                              | Extra configuration for opal-server (see [OPAL Docs](https://docs.opal.ac/tutorials/configure_opal))                                             |
 | `client.extraEnv`                              | Extra configuration for opal-server [OPAL Docs](https://docs.opal.ac/tutorials/configure_opal)                                                   |
 
-**Note:** If you don't use OPAL to manage policy data (`server.dataConfigSources` have no entries, No tracked json files in git repo) - Set `OPAL_DATA_UPDATER_ENABLED: False` in `client.extraEnv` so client won't report an unhealthy state.
+**Note:** If you leave `server.dataConfigSources` with no entries - The chart would automatically set `OPAL_DATA_UPDATER_ENABLED: False` in `client.extraEnv` so client won't report an unhealthy state.
