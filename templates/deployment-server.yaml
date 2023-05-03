@@ -132,6 +132,9 @@ spec:
             failureThreshold: 5
             timeoutSeconds: 10
             periodSeconds: 30
-
+          {{- if .Values.server.resources }}
+          resources:
+            {{- toYaml .Values.server.resources | nindent 12 }}
+          {{- end }}
 {{- end }}
 {{- end }}
