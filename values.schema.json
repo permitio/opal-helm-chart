@@ -5,11 +5,13 @@
 
   "definitions": {
     "DataSourceEntry": {
-      "type": "object", "title": "DataSourceEntry", "additionalProperties": false,
+      "type": "object", "title": "DataSourceEntry", "additionalProperties": true,
       "properties": {
         "url": {"type": "string", "title": "url source to query for data"},
         "topics": {"type": "array", "title": "topics the data applies to", "items": { "type": "string" }},
-        "dst_path": {"type": "string", "title": "OPA data api path to store the document at"}
+        "dst_path": {"type": "string", "title": "OPA data api path to store the document at"},
+        "data": {"type": "object", "title": "Data payload to embed within the data update (instead of having the client fetch it from the url)."},
+        "save_method": {"type": "string", "title": "Method used to write into OPA - PUT/PATCH"}
       }
     },
     "ServerDataSourceConfig": {
