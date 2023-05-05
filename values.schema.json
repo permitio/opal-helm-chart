@@ -94,6 +94,11 @@
           "title": "name of a kubernetes secret from where to fetch secret environment variables.",
           "default": null,
           "items": { "type": "string" }
+        },
+        "resources": {
+          "type": "object",
+          "title": "resources",
+          "default": null
         }
       }
     },
@@ -124,6 +129,11 @@
           "title": "name of a kubernetes secret from where to fetch secret environment variables.",
           "default": null,
           "items": { "type": "string" }
+        },
+        "resources": {
+          "type": "object",
+          "title": "resources",
+          "default": null
         }
       }
     }

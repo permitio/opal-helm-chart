@@ -85,5 +85,9 @@ spec:
             failureThreshold: 5
             timeoutSeconds: 10
             periodSeconds: 30
+          {{- if .Values.client.resources }}
+          resources:
+            {{- toYaml .Values.client.resources | nindent 12 }}
+          {{- end }}
 {{- end }}
 {{- end }}
