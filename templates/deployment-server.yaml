@@ -91,7 +91,7 @@ spec:
             - name: UVICORN_NUM_WORKERS
               value: {{ .Values.server.uvicornWorkers | quote }}
             - name: OPAL_DATA_CONFIG_SOURCES
-              value: {{ .Values.server.dataConfigSources | toJson | squote }}
+              value: {{ .Values.server.dataConfigSources | toRawJson | squote }}
             {{- if .Values.server.broadcastUri }}
             - name: OPAL_BROADCAST_URI
               value: {{ .Values.server.broadcastUri | quote }}
