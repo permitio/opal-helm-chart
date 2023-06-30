@@ -23,11 +23,15 @@
 {{- end -}}
 
 {{- define "opal.serverImage" -}}
-{{- printf "%s/permitio/opal-server" .Values.image.registry }}:{{  default .Chart.AppVersion .Values.image.tag }}
+{{- printf "%s/%s:%s" (default "docker.io" .Values.image.server.registry) (default "permitio/opal-server" .Values.image.server.repository) (default .Chart.AppVersion .Values.image.server.tag) }}
 {{- end -}}
 
 {{- define "opal.clientImage" -}}
-{{- printf "%s/permitio/opal-client" (default .Values.image.registry)  }}:{{  default .Chart.AppVersion .Values.image.tag }}
+{{- printf "%s/%s:%s" (default "docker.io" .Values.image.client.registry) (default "permitio/opal-client" .Values.image.client.repository) (default .Chart.AppVersion .Values.image.client.tag) }}
+{{- end -}}
+
+{{- define "opal.pgsqlImage" -}}
+{{- printf "%s/%s:%s" (default "docker.io" .Values.image.pgsql.registry) (default "postgres" .Values.image.pgsql.repository) (default "alpine" .Values.image.pgsql.tag) }}
 {{- end -}}
 
 {{- define "opal.envSecretsName" -}}

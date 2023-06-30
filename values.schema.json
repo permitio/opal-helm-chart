@@ -32,18 +32,88 @@
   },
 
   "type": "object", "required": ["image"],
-
   "properties": {
     "image": {
       "type": "object", "title": "image", "additionalProperties": false,
-      "required": ["registry"],
+      "required": ["server", "client", "pgsql"],
       "properties": {
-        "registry": { "type": "string", "default": "docker.io", "title": "docker image registry" },
-        "tag": { "type": "string", "title": "docker image tag" },
-        "pullPolicy": { "type": "string", "default": "IfNotPresent", "title": "docker image pull policy" }
+        "server": {
+          "type": "object", "title": "server", "additionalProperties": false,
+          "properties": {
+            "registry": {
+              "type": "string",
+              "default": "docker.io",
+              "title": "server docker image registry"
+            },
+            "repository": {
+              "type": "string",
+              "default": "permitio/opal-server",
+              "title": "server docker image repository"
+            },
+            "tag": {
+              "type": "string",
+              "title": "server docker image tag. defaults to chart appVersion"
+            },
+            "pullSecrets": {
+              "type": "array",
+              "default": [],
+              "title": "server docker image pull secrets"
+            }
+          }
+        },
+        "client": {
+          "type": "object", "title": "client", "additionalProperties": false,
+          "properties": {
+            "registry": {
+              "type": "string",
+              "default": "docker.io",
+              "title": "client docker image registry"
+            },
+            "repository": {
+              "type": "string",
+              "default": "permitio/opal-client",
+              "title": "client docker image repository"
+            },
+            "tag": {
+              "type": "string",
+              "title": "client docker image tag. defaults to chart appVersion"
+            },
+            "pullSecrets": {
+              "type": "array",
+              "default": [],
+              "title": "client docker image pull secrets"
+            }
+          }
+        },
+        "pgsql": {
+          "type": "object",
+          "title": "pgsql",
+          "additionalProperties": false,
+          "properties": {
+            "registry": {
+              "type": "string",
+              "default": "docker.io",
+              "title": "pgsql docker image registry"
+            },
+            "repository": {
+              "type": "string",
+              "default": "postgres",
+              "title": "pgsql docker image repository"
+            },
+            "tag": {
+              "type": "string",
+              "default": "alpine",
+              "title": "pgsql docker image tag"
+            },
+            "pullSecrets": {
+              "type": "array",
+              "default": [],
+              "title": "pgsql docker image pull secrets"
+            }
+          }
+        }
       }
     },
-    "postgresImageRegistry": { "type": "string", "default": "docker.io", "title": "docker registry for postgres image of the chart" },
     "server": {
       "type": ["null", "object"], "additionalProperties": false, "title": "opal server settings",
       "required": ["port", "policyRepoUrl", "pollingInterval", "dataConfigSources", "broadcastPgsql", "uvicornWorkers", "replicas"],
