@@ -1,8 +1,14 @@
 image:
-  registry: docker.io
-
-postgresImageRegistry: docker.io
-imagePullSecrets: [ ]
+  client:
+    registry: docker.io
+    repository: permitio/opal-client
+  server:
+    registry: docker.io
+    repository: permitio/opal-server
+  pgsql:
+    registry: docker.io
+    repository: postgres
+    tag: alpine
 
 server:
   port: 7002

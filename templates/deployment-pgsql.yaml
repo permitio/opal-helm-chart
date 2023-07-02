@@ -16,9 +16,13 @@ spec:
       labels:
         {{- include "opal.pgsqlLabels" . | nindent 8 }}
     spec:
+      {{- with .Values.image.client.pullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       containers:
         - name: pgsql
-          image: {{ printf "%s/postgres:alpine" .Values.postgresImageRegistry  | quote }}
+          image: {{ include "opal.pgsqlImage" . | quote }}
           imagePullPolicy: IfNotPresent
           ports:
             - name: pgsql
