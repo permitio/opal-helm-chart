@@ -18,7 +18,7 @@
       "type": "object", "title": "ServerDataSourceConfig", "additionalProperties": false,
       "properties": {
         "config": {
-          "type": "object", "title": "DataSourceConfig", "additionalProperties": false,
+          "type": ["object", "null"], "title": "DataSourceConfig", "additionalProperties": false,
           "properties": {
             "entries": {
               "type": "array", "title": "list of data sources", "default": [],
