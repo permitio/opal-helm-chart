@@ -32,6 +32,9 @@ server:
     #     topics: ["policy_data"]
     #     dst_path: "/static"
 
+    # Option #4 - Leave config empty and instead supply using the OPAL_DATA_CONFIG_SOURCES environment variable through env or secret
+    # config: null
+
   broadcastUri: null
   broadcastPgsql: true
   uvicornWorkers: 4
