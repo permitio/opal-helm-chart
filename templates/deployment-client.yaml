@@ -31,7 +31,7 @@ spec:
       containers:
         - name: opal-client
           image: {{ include "opal.clientImage" . | quote }}
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: {{ .Values.client.imagePullPolicy | default "IfNotPresent" | quote }}
           ports:
             - name: http
               containerPort: {{ .Values.client.port }}

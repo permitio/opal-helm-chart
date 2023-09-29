@@ -62,7 +62,7 @@ spec:
       containers:
         - name: opal-server
           image: {{ include "opal.serverImage" . | quote }}
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: {{ .Values.server.imagePullPolicy | default "IfNotPresent" | quote }}
           {{- if .Values.e2e }}
           volumeMounts:
             - mountPath: /opt/e2e/policy-repo-data
