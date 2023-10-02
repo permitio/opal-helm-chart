@@ -169,6 +169,11 @@
           "type": "object",
           "title": "resources",
           "default": null
+        },
+        "imagePullPolicy": {
+          "type": "string",
+          "default": "IfNotPresent",
+          "title": "when kubelet should pull specified image"
         }
       }
     },
@@ -204,6 +209,11 @@
           "type": "object",
           "title": "resources",
           "default": null
+        },
+        "imagePullPolicy": {
+          "type": "string",
+          "default": "IfNotPresent",
+          "title": "when kubelet should pull specified image"
         }
       }
     }
