@@ -199,6 +199,10 @@
         "opaStartupData": {
           "type": "object", "title": "client startup data for embedded opa", "default": null
         },
+        "serverUrl": {
+          "type": "string",
+          "title": "opal server url for client to connect to"
+        },
         "secrets": {
           "type": "array",
           "title": "name of a kubernetes secret from where to fetch secret environment variables.",

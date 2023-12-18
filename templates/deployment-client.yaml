@@ -43,8 +43,13 @@ spec:
             - name: UVICORN_NUM_WORKERS
               value: "1"
           {{- if .Values.server }}
+            {{- if .Values.client.serverUrl }}
+            - name: OPAL_SERVER_URL
+              value: {{ .Values.client.serverUrl | quote }}
+            {{- else }}
             - name: OPAL_SERVER_URL
               value: {{ printf "http://%s:%v" (include "opal.serverName" .) .Values.server.port | quote }}
+            {{- end}}
             {{- if not (or (.Values.server.dataConfigSources.external_source_url) (.Values.server.dataConfigSources.config) (hasKey .Values.client.extraEnv "OPAL_DATA_UPDATER_ENABLED") ) }}
             - name: OPAL_DATA_UPDATER_ENABLED
               value: "False"
