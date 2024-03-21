@@ -34,7 +34,7 @@ jobs:
           npx release-it --ci
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: opal version
+      - name: opal versionpj
         id: opalVersion
         run: |
           cat /tmp/opal.version
