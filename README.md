@@ -66,16 +66,17 @@ Then, open http://localhost:8181/v1/data/ in your browser to check OPA data docu
 
 This is not a comprehensive list, but includes the main variables you have to think about
 
-| Variable                                       | Description                                                                                                                                      |
-| ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `server.policyRepoUrl`                         | Git repository holding policy code (& optionally policy data) to be tracked by OPAL                                                              |
-| `server.dataConfigSources`                     | Data sources to be published to clients (and their managed OPAs)                                                                                 |
-| `server.dataConfigSources.config.entries`      | Static list of data source entries (See [OPAL Docs](https://docs.opal.ac/getting-started/running-opal/run-opal-server/data-sources))             |
-| `server.dataConfigSources.external_source_url` | URL to dynamically fetch data sources entries from (See [OPAL Docs](https://docs.opal.ac/tutorials/configure_external_data_sources))             |
+| Variable                                       | Description                                                                                                                                     |
+| ---------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| `server.policyRepoUrl`                         | Git repository holding policy code (& optionally policy data) to be tracked by OPAL                                                             |
+| `server.policyRepoMainBranch`                  | sets OPAL_POLICY_REPO_MAIN_BRANCH which defaults to `master`                                                                                    |
+| `server.dataConfigSources`                     | Data sources to be published to clients (and their managed OPAs)                                                                                |
+| `server.dataConfigSources.config.entries`      | Static list of data source entries (See [OPAL Docs](https://docs.opal.ac/getting-started/running-opal/run-opal-server/data-sources))            |
+| `server.dataConfigSources.external_source_url` | URL to dynamically fetch data sources entries from (See [OPAL Docs](https://docs.opal.ac/tutorials/configure_external_data_sources))            |
 | `server.broadcastUri`                          | Backend for broadcasting updates across multiple opal-server processes (necessary if either `server.uvicornWorkers` or `server.replicas` is > 1) |
-| `server.uvicornWorkers`                        | Count of gunicorn workers (/processes) per opal-server replica                                                                                   |
-| `server.replicas`                              | opal-server's deployment replica count                                                                                                           |
-| `server.extraEnv`                              | Extra configuration for opal-server (see [OPAL Docs](https://docs.opal.ac/tutorials/configure_opal))                                             |
-| `client.extraEnv`                              | Extra configuration for opal-server [OPAL Docs](https://docs.opal.ac/tutorials/configure_opal)                                                   |
+| `server.uvicornWorkers`                        | Count of gunicorn workers (/processes) per opal-server replica                                                                                  |
+| `server.replicas`                              | opal-server's deployment replica count                                                                                                          |
+| `server.extraEnv`                              | Extra configuration for opal-server (see [OPAL Docs](https://docs.opal.ac/tutorials/configure_opal))                                            |
+| `client.extraEnv`                              | Extra configuration for opal-server [OPAL Docs](https://docs.opal.ac/tutorials/configure_opal)                                                  |
 
 **Note:** If you leave `server.dataConfigSources` with no entries - The chart would automatically set `OPAL_DATA_UPDATER_ENABLED: False` in `client.extraEnv` so client won't report an unhealthy state.
