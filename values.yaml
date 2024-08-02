@@ -39,9 +39,12 @@ server:
   broadcastPgsql: true
   uvicornWorkers: 4
   replicas: 1
-  extraEnv: {
-    # "CUSTOM_ENV_VAR": "VALUE"
-  }
+  extraEnv: {}
+  # "CUSTOM_ENV_VAR": "VALUE"
+  # Additional secrets to mount as environment on the server
+  secrets:
+    []
+    # - my-secret-server-data
 
 client:
   port: 7000
@@ -50,3 +53,35 @@ client:
   # If you need to specify a custom hostname for the opal-sever, configure the serverUrl property
   # serverUrl: http://custom-hostname-for-opal:opal-port
   extraEnv: {}
+  # Additional secrets to mount as environment on the client
+  secrets:
+    []
+    # - my-secret-client-data
+
+# Additional resources to deploy in this release
+# Each element as a string and supports templates
+extraObjects:
+  []
+  # - |-
+  #   apiVersion: v1
+  #   kind: Secret
+  #   metadata:
+  #     name: my-secret-server-data
+  #     labels:
+  #   {{- include "opal.serverLabels" . | nindent 4}}
+  #   type: Opaque
+  #   data:
+  #     OPAL_AUTH_PRIVATE_KEY_PASSPHRASE: "passphrase"
+  #     OPAL_AUTH_PUBLIC_KEY: "pubkey"
+  #     OPAL_AUTH_PRIVATE_KEY: "privkey"
+  #     OPAL_BROADCAST_URI: "user:pass@host:port/db"
+  # - |-
+  #   apiVersion: v1
+  #   kind: Secret
+  #   metadata:
+  #     name: my-secret-client-data
+  #     labels:
+  #   {{- include "opal.clientLabels" . | nindent 4 }}
+  #   type: Opaque
+  #   data:
+  #     OPAL_CLIENT_TOKEN: "client-token"
