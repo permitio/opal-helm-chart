@@ -81,3 +81,24 @@ helm.sh/chart: {{ printf "%s-%s" .Chart.Name .Chart.Version | quote }}
 {{ include "opal.pgsqlSelectorLabels" . }}
 {{- end -}}
 
+{{/*
+Create the name of the server service account to use
+*/}}
+{{- define "opal.serverServiceAccountName" -}}
+{{- if .Values.server.serviceAccount.create }}
+{{- default (include "opal.serverName" .) .Values.server.serviceAccount.name }}
+{{- else }}
+{{- default "default" .Values.server.serviceAccount.name }}
+{{- end }}
+{{- end }}
+
+{{/*
+Create the name of the client service account to use
+*/}}
+{{- define "opal.clientServiceAccountName" -}}
+{{- if .Values.client.serviceAccount.create }}
+{{- default (include "opal.clientName" .) .Values.client.serviceAccount.name }}
+{{- else }}
+{{- default "default" .Values.client.serviceAccount.name }}
+{{- end }}
+{{- end }}

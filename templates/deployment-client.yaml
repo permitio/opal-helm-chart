@@ -21,6 +21,11 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      serviceAccountName: {{ include "opal.clientServiceAccountName" . }}
+      {{- with .Values.client.podSecurityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       {{- if .Values.client.opaStartupData }}
       volumes:
         - name: opa-startup-data
@@ -30,6 +35,10 @@ spec:
       {{- end }}
       containers:
         - name: opal-client
+          {{- with .Values.client.securityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           image: {{ include "opal.clientImage" . | quote }}
           imagePullPolicy: {{ .Values.client.imagePullPolicy | default "IfNotPresent" | quote }}
           ports:

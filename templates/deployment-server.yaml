@@ -21,6 +21,11 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      serviceAccountName: {{ include "opal.serverServiceAccountName" . }}
+      {{- with .Values.server.podSecurityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       {{- if .Values.e2e }}
       volumes:
         - name: e2e
@@ -34,6 +39,10 @@ spec:
         - name: git-init
           image: {{ include "opal.serverImage" . | quote }}
           imagePullPolicy: IfNotPresent
+          {{- with .Values.server.securityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           volumeMounts:
             - mountPath: /opt/e2e
               name: e2e
@@ -63,6 +72,10 @@ spec:
         - name: opal-server
           image: {{ include "opal.serverImage" . | quote }}
           imagePullPolicy: {{ .Values.server.imagePullPolicy | default "IfNotPresent" | quote }}
+          {{- with .Values.server.securityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           {{- if .Values.e2e }}
           volumeMounts:
             - mountPath: /opt/e2e/policy-repo-data
