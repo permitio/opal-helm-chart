@@ -219,6 +219,12 @@
           "default": "IfNotPresent",
           "title": "when kubelet should pull specified image"
         }
+      },
+      "extraObjects": {
+        "type": "array",
+        "title": "extra kubernetes objects to deploy with the release",
+        "default": null,
+        "items": { "type": "string" }
       }
     }
   }
