@@ -15,7 +15,7 @@ server:
   policyRepoUrl: "https://github.com/permitio/opal-example-policy-repo"
   policyRepoSshKey: null
   policyRepoClonePath: null
-  policyRepoMainBranch: null
+  policyRepoMainBranch: null # sets OPAL_POLICY_REPO_MAIN_BRANCH which defaults to master
   pollingInterval: 30
   dataConfigSources:
     # Option #1 - No data sources

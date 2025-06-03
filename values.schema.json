@@ -135,7 +135,7 @@
           "type": ["null", "string"], "title": "policy clone path","default": null
         },
         "policyRepoMainBranch": {
-          "type": ["null", "string"], "title": "policy main branch","default": null
+          "type": ["null", "string"], "title": "sets OPAL_POLICY_REPO_MAIN_BRANCH which defaults to master","default": null
         },
         "pollingInterval": {
           "type": "integer", "title": "polling interval (sec)", "default": 30
