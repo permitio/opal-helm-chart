@@ -28,11 +28,44 @@
         },
         "external_source_url": {"type": "string", "title": "url to external data source"}
       }
+    },
+    "SecurityContext": {
+      "type": "object",
+      "title": "SecurityContext",
+      "additionalProperties": true,
+      "properties": {
+        "runAsUser": { "type": "integer" },
+        "runAsGroup": { "type": "integer" },
+        "fsGroup": { "type": "integer" }
+      }
+    },
+    "ContainerSecurityContext": {
+      "type": "object",
+      "title": "ContainerSecurityContext",
+      "additionalProperties": true,
+      "properties": {
+        "runAsNonRoot": { "type": "boolean" },
+        "allowPrivilegeEscalation": { "type": "boolean" }
+      }
     }
   },
 
   "type": "object", "required": ["image"],
   "properties": {
+    "openshift": {
+      "type": "object",
+      "title": "OpenShift compatibility settings",
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "title": "Enable OpenShift compatibility",
+          "default": false
+        },
+        "securityContext": { "$ref": "#/definitions/SecurityContext" },
+        "containerSecurityContext": { "$ref": "#/definitions/ContainerSecurityContext" }
+      }
+    },
     "image": {
       "type": "object", "title": "image", "additionalProperties": false,
       "required": ["server", "client", "pgsql"],
@@ -118,6 +151,8 @@
       "type": ["null", "object"], "additionalProperties": false, "title": "opal server settings",
       "required": ["port", "policyRepoUrl", "pollingInterval", "dataConfigSources", "broadcastPgsql", "uvicornWorkers", "replicas"],
       "properties": {
+        "securityContext": { "$ref": "#/definitions/SecurityContext" },
+        "containerSecurityContext": { "$ref": "#/definitions/ContainerSecurityContext" },
         "enabled": {
           "type": "boolean", "title": "enable server", "default": true
         },
@@ -181,6 +216,8 @@
       "type": ["null", "object"], "additionalProperties": false, "title": "opal client settings",
       "required": ["port", "opaPort", "replicas"],
       "properties": {
+        "securityContext": { "$ref": "#/definitions/SecurityContext" },
+        "containerSecurityContext": { "$ref": "#/definitions/ContainerSecurityContext" },
         "enabled": {
           "type": "boolean", "title": "enable client", "default": true
         },
@@ -218,6 +255,20 @@
           "type": "string",
           "default": "IfNotPresent",
           "title": "when kubelet should pull specified image"
+        }
+      }
+    },
+    "postgresql": {
+      "type": ["null", "object"],
+      "additionalProperties": false,
+      "title": "PostgreSQL settings",
+      "properties": {
+        "securityContext": { "$ref": "#/definitions/SecurityContext" },
+        "containerSecurityContext": { "$ref": "#/definitions/ContainerSecurityContext" },
+        "extraEnv": {
+          "type": "object",
+          "title": "extra environment variables list",
+          "default": {}
         }
       }
     }

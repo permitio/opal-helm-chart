@@ -21,6 +21,14 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      {{- if or .Values.openshift.enabled .Values.server.securityContext }}
+      securityContext:
+        {{- if .Values.server.securityContext }}
+        {{- toYaml .Values.server.securityContext | nindent 8 }}
+        {{- else if .Values.openshift.enabled }}
+        {{- toYaml .Values.openshift.securityContext | nindent 8 }}
+        {{- end }}
+      {{- end }}
       {{- if .Values.e2e }}
       volumes:
         - name: e2e
@@ -29,11 +37,25 @@ spec:
           configMap:
             name: policy-repo-data
             defaultMode: 0755
+      {{- else if .Values.openshift.enabled }}
+      volumes:
+        - name: jwks-dir
+          emptyDir: {}
+      {{- end }}
 
+      {{- if .Values.e2e }}
       initContainers:
         - name: git-init
           image: {{ include "opal.serverImage" . | quote }}
           imagePullPolicy: IfNotPresent
+          {{- if or .Values.openshift.enabled .Values.server.containerSecurityContext }}
+          securityContext:
+            {{- if .Values.server.containerSecurityContext }}
+            {{- toYaml .Values.server.containerSecurityContext | nindent 12 }}
+            {{- else if .Values.openshift.enabled }}
+            {{- toYaml .Values.openshift.containerSecurityContext | nindent 12 }}
+            {{- end }}
+          {{- end }}
           volumeMounts:
             - mountPath: /opt/e2e
               name: e2e
@@ -63,6 +85,14 @@ spec:
         - name: opal-server
           image: {{ include "opal.serverImage" . | quote }}
           imagePullPolicy: {{ .Values.server.imagePullPolicy | default "IfNotPresent" | quote }}
+          {{- if or .Values.openshift.enabled .Values.server.containerSecurityContext }}
+          securityContext:
+            {{- if .Values.server.containerSecurityContext }}
+            {{- toYaml .Values.server.containerSecurityContext | nindent 12 }}
+            {{- else if .Values.openshift.enabled }}
+            {{- toYaml .Values.openshift.containerSecurityContext | nindent 12 }}
+            {{- end }}
+          {{- end }}
           {{- if .Values.e2e }}
           volumeMounts:
             - mountPath: /opt/e2e/policy-repo-data
@@ -70,6 +100,10 @@ spec:
               readOnly: true
             - mountPath: /opt/e2e
               name: e2e
+          {{- else if .Values.openshift.enabled }}
+          volumeMounts:
+            - mountPath: /tmp/jwks_dir
+              name: jwks-dir
           {{- end }}
           ports:
             - name: http
@@ -90,6 +124,12 @@ spec:
             {{- end }}
             - name: UVICORN_NUM_WORKERS
               value: {{ .Values.server.uvicornWorkers | quote }}
+            {{- if .Values.openshift.enabled }}
+            - name: OPAL_JWKS_STATIC_DIR
+              value: "/tmp/jwks_dir"
+            - name: OPAL_AUTH_PRIVATE_KEY_PASSPHRASE
+              value: ""
+            {{- end }}
             {{- if or .Values.server.dataConfigSources.config .Values.server.dataConfigSources.external_source_url }}
             - name: OPAL_DATA_CONFIG_SOURCES
               value: {{ .Values.server.dataConfigSources | toRawJson | squote }}

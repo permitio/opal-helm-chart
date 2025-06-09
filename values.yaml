@@ -1,3 +1,14 @@
+# OpenShift compatibility settings
+openshift:
+  enabled: false  # Set to true for OpenShift deployments
+  securityContext:
+    runAsUser: 1001
+    runAsGroup: 1001
+    fsGroup: 1001
+  containerSecurityContext:
+    runAsNonRoot: true
+    allowPrivilegeEscalation: false
+
 image:
   client:
     registry: docker.io
@@ -18,35 +29,28 @@ server:
   policyRepoMainBranch: null
   pollingInterval: 30
   dataConfigSources:
-    # Option #1 - No data sources
     config:
       entries: []
-
-    # Option #2 - Dynamically get data sources
-    # external_source_url: "https://your-api.com/path/to/api/endpoint"
-
-    # Option #3 - Example static data sources (endpoint is empty by default)
-    # config:
-    #   entries:
-    #   - url: http://opal-server:7002/policy-data
-    #     topics: ["policy_data"]
-    #     dst_path: "/static"
-
-    # Option #4 - Leave config empty and instead supply using the OPAL_DATA_CONFIG_SOURCES environment variable through env or secret
-    # config: null
-
   broadcastUri: null
   broadcastPgsql: true
   uvicornWorkers: 4
   replicas: 1
-  extraEnv: {
-    # "CUSTOM_ENV_VAR": "VALUE"
-  }
+  extraEnv: {}
+  # Optional: Override security contexts per component
+  securityContext: {}
+  containerSecurityContext: {}
 
 client:
   port: 7000
   opaPort: 8181
   replicas: 1
-  # If you need to specify a custom hostname for the opal-sever, configure the serverUrl property
-  # serverUrl: http://custom-hostname-for-opal:opal-port
+  extraEnv: {}
+  # Optional: Override security contexts per component
+  securityContext: {}
+  containerSecurityContext: {}
+
+# PostgreSQL specific settings
+postgresql:
+  securityContext: {}
+  containerSecurityContext: {}
   extraEnv: {}
