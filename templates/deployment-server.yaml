@@ -124,12 +124,6 @@ spec:
             {{- end }}
             - name: UVICORN_NUM_WORKERS
               value: {{ .Values.server.uvicornWorkers | quote }}
-            {{- if .Values.openshift.enabled }}
-            - name: OPAL_JWKS_STATIC_DIR
-              value: "/tmp/jwks_dir"
-            - name: OPAL_AUTH_PRIVATE_KEY_PASSPHRASE
-              value: ""
-            {{- end }}
             {{- if or .Values.server.dataConfigSources.config .Values.server.dataConfigSources.external_source_url }}
             - name: OPAL_DATA_CONFIG_SOURCES
               value: {{ .Values.server.dataConfigSources | toRawJson | squote }}
