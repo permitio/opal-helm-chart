@@ -28,13 +28,30 @@ server:
   policyRepoMainBranch: null
   pollingInterval: 30
   dataConfigSources:
+    # Option #1 - No data sources
     config:
       entries: []
+    
+    # Option #2 - Dynamically get data sources
+    # external_source_url: "https://your-api.com/path/to/api/endpoint"
+
+    # Option #3 - Example static data sources (endpoint is empty by default)
+    # config:
+    #   entries:
+    #   - url: http://opal-server:7002/policy-data
+    #     topics: ["policy_data"]
+    #     dst_path: "/static"
+
+    # Option #4 - Leave config empty and instead supply using the OPAL_DATA_CONFIG_SOURCES environment variable through env or secret
+    # config: null
+
   broadcastUri: null
   broadcastPgsql: true
   uvicornWorkers: 4
   replicas: 1
-  extraEnv: {}
+  extraEnv: {
+    # "CUSTOM_ENV_VAR": "VALUE"
+  }
   securityContext: {}
   containerSecurityContext: {}
 
@@ -42,6 +59,8 @@ client:
   port: 7000
   opaPort: 8181
   replicas: 1
+  # If you need to specify a custom hostname for the opal-sever, configure the serverUrl property
+  # serverUrl: http://custom-hostname-for-opal:opal-port
   extraEnv: {}
   securityContext: {}
   containerSecurityContext: {}
