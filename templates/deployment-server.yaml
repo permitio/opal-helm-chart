@@ -102,7 +102,7 @@ spec:
               name: e2e
           {{- else if .Values.openshift.enabled }}
           volumeMounts:
-            - mountPath: /tmp/jwks_dir
+            - mountPath: /opal/jwks_dir
               name: jwks-dir
           {{- end }}
           ports:

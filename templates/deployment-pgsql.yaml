@@ -62,10 +62,8 @@ spec:
             - name: POSTGRES_PASSWORD
               value: postgres
             {{- if .Values.openshift.enabled }}
-            - name: PGUSER
-              value: postgres
-            - name: POSTGRES_INITDB_ARGS
-              value: "--auth-host=trust"
+            - name: PGDATA
+              value: "/var/lib/postgresql/data/pgdata"
             {{- end }}
             {{- if .Values.postgresql.extraEnv }}
             {{- range $name, $value := .Values.postgresql.extraEnv }}

@@ -1,10 +1,9 @@
-# OpenShift compatibility settings
 openshift:
-  enabled: false  # Set to true for OpenShift deployments
+  enabled: false
   securityContext:
-    runAsUser: 1001
-    runAsGroup: 1001
-    fsGroup: 1001
+    runAsUser: 1010180000
+    runAsGroup: 1010180000
+    fsGroup: 1010180000
   containerSecurityContext:
     runAsNonRoot: true
     allowPrivilegeEscalation: false
@@ -36,7 +35,6 @@ server:
   uvicornWorkers: 4
   replicas: 1
   extraEnv: {}
-  # Optional: Override security contexts per component
   securityContext: {}
   containerSecurityContext: {}
 
@@ -45,12 +43,14 @@ client:
   opaPort: 8181
   replicas: 1
   extraEnv: {}
-  # Optional: Override security contexts per component
   securityContext: {}
   containerSecurityContext: {}
 
-# PostgreSQL specific settings
 postgresql:
   securityContext: {}
   containerSecurityContext: {}
-  extraEnv: {}
+  extraEnv:
+    PGUSER: "postgres"
+    POSTGRES_INITDB_ARGS: "--auth-host=trust"
+
+broadcastReplicas: 1
