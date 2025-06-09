@@ -68,8 +68,6 @@ client:
 postgresql:
   securityContext: {}
   containerSecurityContext: {}
-  extraEnv:
-    PGUSER: "postgres"
-    POSTGRES_INITDB_ARGS: "--auth-host=trust"
+  extraEnv: {}
 
 broadcastReplicas: 1
