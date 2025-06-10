@@ -1,3 +1,13 @@
+openshift:
+  enabled: false
+  securityContext:
+    runAsUser: 1010180000
+    runAsGroup: 1010180000
+    fsGroup: 1010180000
+  containerSecurityContext:
+    runAsNonRoot: true
+    allowPrivilegeEscalation: false
+
 image:
   client:
     registry: docker.io
@@ -21,7 +31,7 @@ server:
     # Option #1 - No data sources
     config:
       entries: []
-
+    
     # Option #2 - Dynamically get data sources
     # external_source_url: "https://your-api.com/path/to/api/endpoint"
 
@@ -42,6 +52,8 @@ server:
   extraEnv: {
     # "CUSTOM_ENV_VAR": "VALUE"
   }
+  securityContext: {}
+  containerSecurityContext: {}
 
 client:
   port: 7000
@@ -50,3 +62,12 @@ client:
   # If you need to specify a custom hostname for the opal-sever, configure the serverUrl property
   # serverUrl: http://custom-hostname-for-opal:opal-port
   extraEnv: {}
+  securityContext: {}
+  containerSecurityContext: {}
+
+postgresql:
+  securityContext: {}
+  containerSecurityContext: {}
+  extraEnv: {}
+
+broadcastReplicas: 1

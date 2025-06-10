@@ -21,6 +21,14 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      {{- if or .Values.openshift.enabled .Values.client.securityContext }}
+      securityContext:
+        {{- if .Values.client.securityContext }}
+        {{- toYaml .Values.client.securityContext | nindent 8 }}
+        {{- else if .Values.openshift.enabled }}
+        {{- toYaml .Values.openshift.securityContext | nindent 8 }}
+        {{- end }}
+      {{- end }}
       {{- if .Values.client.opaStartupData }}
       volumes:
         - name: opa-startup-data
@@ -32,6 +40,14 @@ spec:
         - name: opal-client
           image: {{ include "opal.clientImage" . | quote }}
           imagePullPolicy: {{ .Values.client.imagePullPolicy | default "IfNotPresent" | quote }}
+          {{- if or .Values.openshift.enabled .Values.client.containerSecurityContext }}
+          securityContext:
+            {{- if .Values.client.containerSecurityContext }}
+            {{- toYaml .Values.client.containerSecurityContext | nindent 12 }}
+            {{- else if .Values.openshift.enabled }}
+            {{- toYaml .Values.openshift.containerSecurityContext | nindent 12 }}
+            {{- end }}
+          {{- end }}
           ports:
             - name: http
               containerPort: {{ .Values.client.port }}
