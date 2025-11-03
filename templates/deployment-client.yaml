@@ -66,7 +66,7 @@ spec:
             - name: OPAL_SERVER_URL
               value: {{ printf "http://%s:%v" (include "opal.serverName" .) .Values.server.port | quote }}
             {{- end}}
-            {{- if not (or (.Values.server.dataConfigSources.external_source_url) (.Values.server.dataConfigSources.config) (hasKey .Values.client.extraEnv "OPAL_DATA_UPDATER_ENABLED") ) }}
+            {{- if not (or (.Values.server.dataConfigSources.external_source_url) (and .Values.server.dataConfigSources.config .Values.server.dataConfigSources.config.entries) (hasKey .Values.client.extraEnv "OPAL_DATA_UPDATER_ENABLED") ) }}
             - name: OPAL_DATA_UPDATER_ENABLED
               value: "False"
             {{- end }}

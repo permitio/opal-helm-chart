@@ -124,7 +124,7 @@ spec:
             {{- end }}
             - name: UVICORN_NUM_WORKERS
               value: {{ .Values.server.uvicornWorkers | quote }}
-            {{- if or .Values.server.dataConfigSources.config .Values.server.dataConfigSources.external_source_url }}
+            {{- if or .Values.server.dataConfigSources.external_source_url (and .Values.server.dataConfigSources.config .Values.server.dataConfigSources.config.entries) }}
             - name: OPAL_DATA_CONFIG_SOURCES
               value: {{ .Values.server.dataConfigSources | toRawJson | squote }}
             {{- end}}
