@@ -1,5 +1,5 @@
 {{- if .Values.client }}
-{{- if ne (.Values.client.enabled | default true) false }}
+{{- if ne .Values.client.enabled false  }}
 apiVersion: v1
 kind: Service
 metadata:
