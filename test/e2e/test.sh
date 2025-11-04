@@ -8,7 +8,7 @@ helm test -n opal --logs myopal
 DATA_URL="http://myopal-opal-client:8181/v1/data"
 
 # Check that users data is present initially
-RESULT=$(kubectl run -n opal curl-test --image=curlimages/curl:latest --rm -i --restart=Never -- curl -s ${DATA_URL}/users)
+RESULT=$(kubectl run -n opal curl-test --image=curlimages/curl:latest --rm -i --restart=Never -- curl -s ${DATA_URL}/users 2>&1 | grep -v "pod.*deleted")
 echo "Initial users: $RESULT"
 echo "$RESULT" | grep -q '"result"'
 
@@ -22,11 +22,11 @@ fi
 sleep 7
 
 # Check that users data is empty after update (OPA returns {} when data is empty)
-RESULT=$(kubectl run -n opal curl-test --image=curlimages/curl:latest --rm -i --restart=Never -- curl -s ${DATA_URL}/users)
+RESULT=$(kubectl run -n opal curl-test --image=curlimages/curl:latest --rm -i --restart=Never -- curl -s ${DATA_URL}/users 2>&1 | grep -v "pod.*deleted")
 echo "After update users: $RESULT"
 [ "$RESULT" == '{}' ]
 
 # Check that losers data is present
-RESULT=$(kubectl run -n opal curl-test --image=curlimages/curl:latest --rm -i --restart=Never -- curl -s ${DATA_URL}/losers)
+RESULT=$(kubectl run -n opal curl-test --image=curlimages/curl:latest --rm -i --restart=Never -- curl -s ${DATA_URL}/losers 2>&1 | grep -v "pod.*deleted")
 echo "Losers data: $RESULT"
 echo "$RESULT" | grep -q '"result"'
