@@ -11,7 +11,7 @@ jobs:
       opalVersion: ${{ steps.opalVersion.outputs.opalVersion }}
     steps:
       - name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: nodejs 12
@@ -20,7 +20,7 @@ jobs:
           node-version: '12.x'
       - name: cache node_modules
         id: nodeCache
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: |
             ./node_modules
@@ -38,11 +38,11 @@ jobs:
         id: opalVersion
         run: |
           cat /tmp/opal.version
-          echo "::set-output name=opalVersion::$(cat /tmp/opal.version)"
+          echo "opalVersion=$(cat /tmp/opal.version)" >> $GITHUB_OUTPUT
       - uses: azure/setup-helm@v1
       - run: helm package . --version ${{ steps.opalVersion.outputs.opalVersion }}
       - name: upload artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: "helm"
           path: "opal-${{ steps.opalVersion.outputs.opalVersion }}.tgz"
@@ -53,7 +53,7 @@ jobs:
     needs: build_chart_job
     steps:
       - name: checkout gh-pages
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           ref: gh-pages
       - name: download artifact
