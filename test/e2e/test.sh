@@ -21,10 +21,10 @@ fi
 
 sleep 7
 
-# Check that users data is empty after update (should be {"result":{}})
+# Check that users data is empty after update (OPA returns {} when data is empty)
 RESULT=$(kubectl run -n opal curl-test --image=curlimages/curl:latest --rm -i --restart=Never -- curl -s ${DATA_URL}/users)
 echo "After update users: $RESULT"
-[ "$RESULT" == '{"result":{}}' ]
+[ "$RESULT" == '{}' ]
 
 # Check that losers data is present
 RESULT=$(kubectl run -n opal curl-test --image=curlimages/curl:latest --rm -i --restart=Never -- curl -s ${DATA_URL}/losers)
