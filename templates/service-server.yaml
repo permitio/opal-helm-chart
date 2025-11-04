@@ -1,5 +1,5 @@
 {{- if .Values.server }}
-{{- if ne .Values.server.enabled false  }}
+{{- if ne (.Values.server.enabled | default true) false }}
 apiVersion: v1
 kind: Service
 metadata:

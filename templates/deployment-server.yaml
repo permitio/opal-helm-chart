@@ -1,5 +1,5 @@
 {{- if .Values.server }}
-{{- if ne .Values.server.enabled false  }}
+{{- if ne (.Values.server.enabled | default true) false }}
 {{- $nm := include "opal.serverName" . | quote }}
 apiVersion: apps/v1
 kind: Deployment
