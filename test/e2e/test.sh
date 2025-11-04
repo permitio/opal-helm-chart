@@ -10,7 +10,7 @@ DATA_URL="http://myopal-opal-client:8181/v1/data"
 # Check that users data is present initially
 RESULT=$(kubectl run -n opal curl-test --image=curlimages/curl:latest --rm -i --restart=Never -- curl -s ${DATA_URL}/users)
 echo "Initial users: $RESULT"
-[ "$RESULT" != "{}" ]
+echo "$RESULT" | grep -q '"result"'
 
 # Run the update script
 if [ -z $MSYSTEM ]; then
@@ -21,12 +21,12 @@ fi
 
 sleep 7
 
-# Check that users data is empty after update
+# Check that users data is empty after update (should be {"result":{}})
 RESULT=$(kubectl run -n opal curl-test --image=curlimages/curl:latest --rm -i --restart=Never -- curl -s ${DATA_URL}/users)
 echo "After update users: $RESULT"
-[ "$RESULT" == "{}" ]
+[ "$RESULT" == '{"result":{}}' ]
 
 # Check that losers data is present
 RESULT=$(kubectl run -n opal curl-test --image=curlimages/curl:latest --rm -i --restart=Never -- curl -s ${DATA_URL}/losers)
 echo "Losers data: $RESULT"
-[ "$RESULT" != "{}" ]
+echo "$RESULT" | grep -q '"result"'
