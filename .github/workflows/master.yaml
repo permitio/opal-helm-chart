@@ -16,13 +16,13 @@ jobs:
       - uses: actions/checkout@v2
       - uses: azure/setup-helm@v1
         with:
-          version: "3.3.4"
+          version: "3.19.0"
       - name: helm lint
         run: |
           jq --version
           ./test/linter/test.sh
       - name: start k8s with k3d
-        uses: AbsaOSS/k3d-action@v1.4.0
+        uses: AbsaOSS/k3d-action@v2.4.0
         with:
           cluster-name: "opal"
           use-default-registry: false
