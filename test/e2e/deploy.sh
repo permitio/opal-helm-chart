@@ -13,4 +13,4 @@ else
     --set server.policyRepoUrl='//opt/e2e/policy-repo.git'
 fi
 
-kubectl logs -n opal service/myopal-server git-init
+kubectl logs -n opal service/myopal-opal-server git-init
