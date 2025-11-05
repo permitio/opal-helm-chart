@@ -2,6 +2,17 @@ apiVersion: v1
 entries:
   opal:
   - apiVersion: v2
+    appVersion: 0.7.12
+    created: "2025-11-05T18:37:37.288329445Z"
+    digest: 239ad8f121061c67d4261ccb156ad441a1dc3be83d93d69b863e9649389433ed
+    icon: https://www.opal.ac/icons/icon-192x192.png
+    kubeVersion: '>= 1.18.0-0'
+    name: opal
+    type: application
+    urls:
+    - opal-0.0.29.tgz
+    version: 0.0.29
+  - apiVersion: v2
     appVersion: 0.7.6
     created: "2024-05-01T12:08:18.138501046Z"
     digest: 79d8337f3fd6a5fd4979652fd5529ae9b0058e15874a8da914f07ea02c55827a
@@ -298,4 +309,4 @@ entries:
     urls:
     - opal-0.0.2.tgz
     version: 0.0.2
-generated: "2024-05-01T12:08:18.137048551Z"
+generated: "2025-11-05T18:37:37.286838208Z"
