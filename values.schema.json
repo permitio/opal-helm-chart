@@ -209,6 +209,27 @@
           "type": "string",
           "default": "IfNotPresent",
           "title": "when kubelet should pull specified image"
+        },
+        "podLabels": {
+          "type": "object",
+          "title": "additional pod labels for the OPAL server",
+          "default": {}
+        },
+        "nodeSelector": {
+          "type": "object",
+          "title": "node selector for scheduling OPAL server pods",
+          "default": {}
+        },
+        "tolerations": {
+          "type": "array",
+          "title": "tolerations for scheduling OPAL server pods on tainted nodes",
+          "default": [],
+          "items": { "type": "object" }
+        },
+        "affinity": {
+          "type": "object",
+          "title": "affinity rules for OPAL server pods",
+          "default": {}
         }
       }
     },
@@ -255,6 +276,27 @@
           "type": "string",
           "default": "IfNotPresent",
           "title": "when kubelet should pull specified image"
+        },
+        "podLabels": {
+          "type": "object",
+          "title": "additional pod labels for the OPAL client",
+          "default": {}
+        },
+        "nodeSelector": {
+          "type": "object",
+          "title": "node selector for scheduling OPAL client pods",
+          "default": {}
+        },
+        "tolerations": {
+          "type": "array",
+          "title": "tolerations for scheduling OPAL client pods on tainted nodes",
+          "default": [],
+          "items": { "type": "object" }
+        },
+        "affinity": {
+          "type": "object",
+          "title": "affinity rules for OPAL client pods",
+          "default": {}
         }
       }
     },
