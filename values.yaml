@@ -54,6 +54,10 @@ server:
   }
   securityContext: {}
   containerSecurityContext: {}
+  podLabels: {}
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
 
 client:
   port: 7000
@@ -64,6 +68,10 @@ client:
   extraEnv: {}
   securityContext: {}
   containerSecurityContext: {}
+  podLabels: {}
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
 
 postgresql:
   securityContext: {}
